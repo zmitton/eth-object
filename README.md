@@ -1,6 +1,13 @@
 # EthObject
 Bare bones objects used by the Ethereum levelDB database, and Merkle Patricia Tree. With lots of helper functions for viewing and moving them in and out of other popular formats.
 
+```
+npm install eth-object
+```
+```javascript
+const { Account, Header, Log, Proof, Receipt, Transaction } = require('eth-object')
+```
+
 ## Formating
 
 The data formats used/returned for account, `header`, `log`, `proof`, `receipt`, and `transaction` are `eth-object`s. They mimic the native Ethereum format of being _arrays of byteArrays and nested arrays (of the same)_. This is the format you would find in the native database after being rlp-decoded.
