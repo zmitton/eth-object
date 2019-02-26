@@ -14,13 +14,13 @@ The data formats used/returned for account, `header`, `log`, `proof`, `receipt`,
 
 An account, for example, will look like this:
 
-```
-[
-  <Buffer 01>,
-  <Buffer >,
-  <Buffer c1 49 53 a6 4f 69 63 26 19 63 6f bd f3 27 e8 83 43 6b 9f d1 b1 02 52 20 e5 0f b7 0a b7 d2 e2 a8>,
-  <Buffer f7 cf 62 32 b8 d6 55 b9 22 68 b3 56 53 25 e8 89 7f 2f 82 d6 5a 4e aa f4 e7 8f ce f0 4e 8f ee 6a>,
-]
+```javascript
+// [
+//   <Buffer 01>,
+//   <Buffer >,
+//   <Buffer c1 49 53 a6 4f 69 63 26 19 63 6f bd f3 27 e8 83 43 6b 9f d1 b1 02 52 20 e5 0f b7 0a b7 d2 e2 a8>,
+//   <Buffer f7 cf 62 32 b8 d6 55 b9 22 68 b3 56 53 25 e8 89 7f 2f 82 d6 5a 4e aa f4 e7 8f ce f0 4e 8f ee 6a>,
+// ]
 ```
 
 Its a 4-item array of _bytearrays_ representing the _nonce, balance, storageRoot, and codeHash_ respectively. 
