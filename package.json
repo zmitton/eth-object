@@ -1,0 +1,36 @@
+{
+  "name": "eth-object",
+  "version": "1.0.0",
+  "description": "Bare bones Ethereum objects",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zmitton/eth-object.git"
+  },
+  "keywords": [
+    "Ethereum",
+    "RLP",
+    "RPC",
+    "Object",
+    "Buffer",
+    "ByteArray",
+    "Array",
+    "Bytes",
+    "Raw"
+  ],
+  "author": "Zac Mitton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zmitton/eth-object/issues"
+  },
+  "homepage": "https://github.com/zmitton/eth-object#readme",
+  "dependencies": {
+    "ethereumjs-util": "^6.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^6.0.2"
+  }
+}
