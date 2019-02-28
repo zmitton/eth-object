@@ -1,9 +1,15 @@
 # EthObject
-Bare bones objects used by the Ethereum levelDB database, and Merkle Patricia Tree. With lots of helper functions for viewing and moving them in and out of other popular formats.
+
+Trying to serialize Ethereum Trie / LevelDB data from hex, buffers and rpc into the same format is tough. This library aims to solve that with re-usable and composable objects that you can just call Object.from<X> to ingest new data.
+
+EthObjects hold Ethereum bare bones data with lots of helper functions for viewing and moving them in and out of other popular formats.
 
 ```
 npm install eth-object
 ```
+
+The following objects are supported:
+
 ```javascript
 const { Account, Header, Log, Proof, Receipt, Transaction } = require('eth-object')
 ```
