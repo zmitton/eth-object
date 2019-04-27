@@ -1,5 +1,4 @@
 const { Account, Header, Log, Proof, Receipt, Transaction } = require('./index')
-// const { keccak, encode, decode, toBuffer } = require('./src/utils')
 
 describe('Objects should do some shit', () => {
   it('Account', async () => {

@@ -1,8 +1,8 @@
-Account = require('./src/account')
-Header = require('./src/header')
-Log = require('./src/log')
-Proof = require('./src/proof')
-Receipt = require('./src/receipt')
-Transaction = require('./src/transaction')
+const Account = require('./src/account')
+const Header = require('./src/header')
+const Log = require('./src/log')
+const Proof = require('./src/proof')
+const Receipt = require('./src/receipt')
+const Transaction = require('./src/transaction')
 
 module.exports = { Account, Header, Log, Proof, Receipt, Transaction }

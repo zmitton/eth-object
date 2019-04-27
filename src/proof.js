@@ -1,4 +1,4 @@
-const { keccak, encode, decode, toBuffer, toHex } = require('./utils')
+const { keccak, encode, decode, toHex } = require('./utils')
 const EthObject = require('./ethObject')
 
 class Proof extends EthObject{

@@ -1,4 +1,4 @@
-const { keccak, encode, decode, toBuffer, toHex } = require('./utils')
+const { encode, toHex } = require('./utils')
 
 class EthObject extends Array{
 

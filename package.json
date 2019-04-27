@@ -1,6 +1,6 @@
 {
   "name": "eth-object",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bare bones Ethereum objects",
   "main": "index.js",
   "scripts": {

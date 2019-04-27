@@ -1,4 +1,4 @@
-const { keccak, encode, decode, toBuffer } = require('./utils')
+const {decode, toBuffer } = require('./utils')
 const EthObject = require('./ethObject')
 
 class Log extends EthObject{
