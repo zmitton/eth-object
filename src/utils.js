@@ -1,10 +1,11 @@
-const Util = require('ethereumjs-util')
+const Util = require('./dependencyUtils');
+const rlp = require('rlp');
 
 const keccak = Util.keccak
 const encode = (input) => {
-  return input === "0x0" ? Util.rlp.encode(Buffer.from([])) : Util.rlp.encode(input)
+  return input === "0x0" ? rlp.encode(Buffer.from([])) : rlp.encode(input)
 }
-const decode = Util.rlp.decode
+const decode = rlp.decode
 const toBuffer = (input) => {
   return input === "0x0" ? Buffer.from([]) : Util.toBuffer(input)
 }
