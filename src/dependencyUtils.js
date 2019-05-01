@@ -5,13 +5,9 @@ const Buffer = require('safe-buffer').Buffer;
 
 // following 5 functions adapted or copied from ethereumjs-util
 
-exports.keccak = function (a, bits) {
-  if (bits === void 0) { bits = 256; }
+exports.keccak = function (a) {
   a = exports.toBuffer(a);
-  if (!bits)
-      bits = 256;
-  const hash = keccak256.create('keccak' + bits);
-  return hash.update(a).digest();
+  return keccak256.create().update(a).digest();
 };
 
 exports.toBuffer = function (v) {
