@@ -1,4 +1,4 @@
-const { encode, toHex } = require('./utils')
+const { encode, toHex } = require('eth-util-lite')
 
 class EthObject extends Array{
 
