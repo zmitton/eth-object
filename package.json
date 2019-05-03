@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/zmitton/eth-object#readme",
   "dependencies": {
-    "eth-util-lite": "^1.0.0"
+    "eth-util-lite": "^1.0.1"
   },
   "devDependencies": {
     "mocha": "^6.1.4"

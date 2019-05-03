@@ -1,4 +1,4 @@
-const { decode, toBuffer } = require('eth-util-lite')
+const { decode, toBuffer, KECCAK256_RLP_ARRAY, KECCAK256_NULL } = require('eth-util-lite')
 const EthObject = require('./ethObject')
 
 class Header extends EthObject{
@@ -33,11 +33,11 @@ class Header extends EthObject{
     if(rpcResult){
       return new this([
         toBuffer(rpcResult.parentHash),
-        toBuffer(rpcResult.sha3Uncles) || U.KECCAK256_RLP_ARRAY,
+        toBuffer(rpcResult.sha3Uncles) || KECCAK256_RLP_ARRAY,
         toBuffer(rpcResult.miner),
-        toBuffer(rpcResult.stateRoot) || U.SHA3_NULL,
-        toBuffer(rpcResult.transactionsRoot) || U.SHA3_NULL,
-        toBuffer(rpcResult.receiptsRoot) || toBuffer(rpcResult.receiptRoot) || U.SHA3_NULL,
+        toBuffer(rpcResult.stateRoot) || KECCAK256_NULL,
+        toBuffer(rpcResult.transactionsRoot) || KECCAK256_NULL,
+        toBuffer(rpcResult.receiptsRoot) || toBuffer(rpcResult.receiptRoot) || KECCAK256_NULL,
         toBuffer(rpcResult.logsBloom),
         toBuffer(rpcResult.difficulty),
         toBuffer(rpcResult.number),
