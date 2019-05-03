@@ -1,4 +1,4 @@
-const { keccak, encode, decode, toBuffer } = require('./utils')
+const { decode, toBuffer } = require('eth-util-lite')
 const EthObject = require('./ethObject')
 
 class Header extends EthObject{

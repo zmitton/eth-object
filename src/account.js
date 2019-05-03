@@ -1,4 +1,4 @@
-const { keccak, encode, decode, toBuffer } = require('./utils')
+const { keccak, encode, decode, toBuffer } = require('eth-util-lite')
 const EthObject = require('./ethObject')
 
 class Account extends EthObject{

@@ -28,10 +28,7 @@
   },
   "homepage": "https://github.com/zmitton/eth-object#readme",
   "dependencies": {
-    "bn.js": "^4.11.8",
-    "js-sha3": "^0.8.0",
-    "rlp": "^2.2.3",
-    "safe-buffer": "^5.1.2"
+    "eth-util-lite": "^1.0.0"
   },
   "devDependencies": {
     "mocha": "^6.1.4"
