@@ -31,6 +31,8 @@
     "eth-util-lite": "near/eth-util-lite#master"
   },
   "devDependencies": {
+    "ethereumjs-block": "^2.2.2",
+    "ethereumjs-vm": "^4.2.0",
     "mocha": "^6.1.4",
     "web3": "^1.2.9"
   }
