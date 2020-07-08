@@ -4,11 +4,11 @@
   "description": "Bare bones Ethereum objects",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha --recursive"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zmitton/eth-object.git"
+    "url": "git+https://github.com/near/eth-object.git"
   },
   "keywords": [
     "Ethereum",
@@ -24,13 +24,14 @@
   "author": "Zac Mitton",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zmitton/eth-object/issues"
+    "url": "https://github.com/near/eth-object/issues"
   },
-  "homepage": "https://github.com/zmitton/eth-object#readme",
+  "homepage": "https://github.com/near/eth-object#readme",
   "dependencies": {
-    "eth-util-lite": "^1.0.1"
+    "eth-util-lite": "near/eth-util-lite#master"
   },
   "devDependencies": {
-    "mocha": "^6.1.4"
+    "mocha": "^6.1.4",
+    "web3": "^1.2.9"
   }
 }
