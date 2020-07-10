@@ -57,24 +57,14 @@ class Header extends EthObject {
     }
   }
 
-  static fromWeb3(blockData) {
-    return this.fromBuffer(utils.rlp.encode([
-      blockData.parentHash,
-      blockData.sha3Uncles,
-      blockData.miner,
-      blockData.stateRoot,
-      blockData.transactionsRoot,
-      blockData.receiptsRoot,
-      blockData.logsBloom,
-      blockData.difficulty == "0" ? "0x" : web3.utils.toHex(blockData.difficulty),
-      web3.utils.toHex(blockData.number),
-      web3.utils.toHex(blockData.gasLimit),
-      web3.utils.toHex(blockData.gasUsed),
-      web3.utils.toHex(blockData.timestamp),
-      blockData.extraData,
-      blockData.mixHash,
-      blockData.nonce,
-    ]))
+  static fromWeb3(web3Result) {
+    let rpcResult = Object.assign({}, web3Result)
+    rpcResult.difficulty = web3.utils.toHex(rpcResult.difficulty)
+    rpcResult.number = web3.utils.toHex(rpcResult.number)
+    rpcResult.gasLimit = web3.utils.toHex(rpcResult.gasLimit)
+    rpcResult.gasUsed = web3.utils.toHex(rpcResult.gasUsed)
+    rpcResult.timestamp = web3.utils.toHex(rpcResult.timestamp)
+    return this.fromRpc(rpcResult)
   }
 }
 

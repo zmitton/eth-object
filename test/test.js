@@ -53,28 +53,7 @@ describe('Objects should do some shit', () => {
 describe('Convert Rpc response to buffer correctly', () => {
   it('zero difficulty header', () => {
     let blockData = require(path.join(__dirname, 'data', 'zero_difficulty_header.json'))
-    let header = Header.fromRpc(blockData)
-
-    let blockData2 = Object.assign({}, blockData)
-    blockData2.difficulty = web3.utils.toHex(blockData2.difficulty)
-    // bignum, like difficulty, 0 need to be convert to '0x0' before feed to fromRpc
-    // uint64, like gasLimit, gasUsed and timestamp should stay number,
-    // because eth-object.fromRpc does a "0x0" -> "0x" conversion, which should not be done for uint64
-    // blockData2.gasLimit = web3.utils.toHex(blockData2.gasLimit)
-    // blockData2.gasUsed = web3.utils.toHex(blockData2.gasUsed)
-    // blockData2.timestamp = web3.utils.toHex(blockData2.timestamp)
-    let header2 = Header.fromRpc(blockData2)
-
-    let blockData3 = Object.assign({}, blockData)
-    // Faithfully follow https://eth.wiki/json-rpc/API#hex-value-encoding
-    // And https://eth.wiki/json-rpc/API#example-27
-    blockData3.difficulty = web3.utils.toHex(blockData3.difficulty)
-    blockData3.gasLimit = web3.utils.toHex(blockData3.gasLimit)
-    blockData3.gasUsed = web3.utils.toHex(blockData3.gasUsed)
-    blockData3.timestamp = web3.utils.toHex(blockData3.timestamp)
-    let header3 = blockHeaderFromRpc(blockData)
-    let header4 = blockHeaderFromRpc(blockData3)
-    let header5 = Header.fromWeb3(blockData)
+    let header = Header.fromWeb3(blockData)
 
     let correctHeaderBuf = utils.rlp.encode([
       blockData.parentHash,
@@ -95,27 +74,13 @@ describe('Convert Rpc response to buffer correctly', () => {
     ])
 
     let correctHeader = Header.fromBuffer(correctHeaderBuf)
-    for (let i in header) {
-      console.log(i, header[i].equals(correctHeader[i]))
-      console.log(i, header2[i].equals(correctHeader[i]))
-      console.log(i, header3.raw[i].equals(correctHeader[i]))
-      console.log(i, header4.raw[i].equals(correctHeader[i]))
-      console.log(i, header5.raw[i].equals(correctHeader[i]))
-    }
-    console.log(correctHeader[7])
-    console.log(header[7])
-    console.log(header2[7])
-    console.log(header3.raw[7])
-    console.log(header4.raw[7])
-    console.log('-------------------')
-    console.log(correctHeader[10])
-    console.log(header[10])
-    console.log(header2[10])
-    console.log(header3.raw[10])
-    console.log(header4.raw[10])
-    assert(!correctHeaderBuf.equals(header.serialize()))
-    assert(correctHeaderBuf.equals(header2.serialize()))
-    assert(correctHeaderBuf.equals(header5.serialize()))
 
+    assert(correctHeaderBuf.equals(correctHeader.serialize()))
+    //assert(correctHeaderBuf.equals(header.serialize()))
+    console.log(web3.utils.sha3(header.serialize()))
+    console.log(web3.utils.sha3(correctHeader.serialize()))
+    console.log(web3.utils.sha3(Header.fromRpc(blockData).serialize()))
+    console.log(web3.utils.sha3(utils.rlp.encode(blockHeaderFromRpc(blockData).raw)))
+    console.log(blockData.hash)
   })
 })
