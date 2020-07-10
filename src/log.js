@@ -1,21 +1,21 @@
-const {decode, toBuffer } = require('eth-util-lite')
+const { decode, toBuffer } = require('eth-util-lite')
 const EthObject = require('./ethObject')
 
-class Log extends EthObject{
+class Log extends EthObject {
 
-  static get fields(){ return ['address', 'topics', 'data'] }
+  static get fields() { return ['address', 'topics', 'data'] }
 
-  constructor(raw = Log.NULL){
+  constructor(raw = Log.NULL) {
     super(Log.fields, raw)
   }
 
-  static fromBuffer(buf){ return buf ? new Log(decode(buf)) : new Log() }
-  static fromHex(hex){ return hex ? new Log(decode(hex)) : new Log() }
-  static fromRaw(raw){ return new Log(raw) }
-  static fromObject(rpcResult){ return Log.fromRpc(rpcResult) }
-  static fromRpc(rpcResult){
+  static fromBuffer(buf) { return buf ? new Log(decode(buf)) : new Log() }
+  static fromHex(hex) { return hex ? new Log(decode(hex)) : new Log() }
+  static fromRaw(raw) { return new Log(raw) }
+  static fromObject(rpcResult) { return Log.fromRpc(rpcResult) }
+  static fromRpc(rpcResult) {
     let topics = []
-  //.map
+    //.map
     for (var i = 0; i < rpcResult.topics.length; i++) {
       topics.push(toBuffer(rpcResult.topics[i]))
     }
@@ -24,6 +24,10 @@ class Log extends EthObject{
       topics,
       toBuffer(rpcResult.data)
     ])
+  }
+
+  static fromWeb3(web3Result) {
+    return this.fromRpc(web3Result)
   }
 }
 
