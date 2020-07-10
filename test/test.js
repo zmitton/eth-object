@@ -2,7 +2,7 @@ const { Account, Header, Log, Proof, Receipt, Transaction } = require('../index'
 const path = require('path')
 const web3 = require('web3')
 const utils = require('ethereumjs-util')
-const { assert } = require('console')
+const { assert } = require('chai')
 const blockHeaderFromRpc = require('ethereumjs-block/header-from-rpc');
 
 describe('Objects should do some shit', () => {
@@ -74,6 +74,7 @@ describe('Convert Rpc response to buffer correctly', () => {
     blockData3.timestamp = web3.utils.toHex(blockData3.timestamp)
     let header3 = blockHeaderFromRpc(blockData)
     let header4 = blockHeaderFromRpc(blockData3)
+    let header5 = Header.fromWeb3(blockData)
 
     let correctHeaderBuf = utils.rlp.encode([
       blockData.parentHash,
@@ -83,7 +84,7 @@ describe('Convert Rpc response to buffer correctly', () => {
       blockData.transactionsRoot,
       blockData.receiptsRoot,
       blockData.logsBloom,
-      blockData.difficulty == "0" ? "0x": web3.utils.toHex(blockData.difficulty),
+      blockData.difficulty == "0" ? "0x" : web3.utils.toHex(blockData.difficulty),
       web3.utils.toHex(blockData.number),
       web3.utils.toHex(blockData.gasLimit),
       web3.utils.toHex(blockData.gasUsed),
@@ -99,6 +100,7 @@ describe('Convert Rpc response to buffer correctly', () => {
       console.log(i, header2[i].equals(correctHeader[i]))
       console.log(i, header3.raw[i].equals(correctHeader[i]))
       console.log(i, header4.raw[i].equals(correctHeader[i]))
+      console.log(i, header5.raw[i].equals(correctHeader[i]))
     }
     console.log(correctHeader[7])
     console.log(header[7])
@@ -113,5 +115,7 @@ describe('Convert Rpc response to buffer correctly', () => {
     console.log(header4.raw[10])
     assert(!correctHeaderBuf.equals(header.serialize()))
     assert(correctHeaderBuf.equals(header2.serialize()))
+    assert(correctHeaderBuf.equals(header5.serialize()))
+
   })
 })

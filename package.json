@@ -28,12 +28,14 @@
   },
   "homepage": "https://github.com/near/eth-object#readme",
   "dependencies": {
-    "eth-util-lite": "near/eth-util-lite#master"
+    "eth-util-lite": "near/eth-util-lite#master",
+    "ethereumjs-util": "^7.0.3",
+    "web3": "^1.2.9"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "ethereumjs-block": "^2.2.2",
     "ethereumjs-vm": "^4.2.0",
-    "mocha": "^6.1.4",
-    "web3": "^1.2.9"
+    "mocha": "^6.1.4"
   }
 }
