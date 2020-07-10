@@ -50,37 +50,16 @@ describe('Objects should do some shit', () => {
   })
 })
 
-describe('Convert Rpc response to buffer correctly', () => {
-  it('zero difficulty header', () => {
+describe('Convert Web3 response to buffer correctly', () => {
+  it('zero difficulty header from ganache', () => {
     let blockData = require(path.join(__dirname, 'data', 'zero_difficulty_header.json'))
     let header = Header.fromWeb3(blockData)
+    assert(web3.utils.sha3(header.serialize()) === blockData.hash)
+  })
 
-    let correctHeaderBuf = utils.rlp.encode([
-      blockData.parentHash,
-      blockData.sha3Uncles,
-      blockData.miner,
-      blockData.stateRoot,
-      blockData.transactionsRoot,
-      blockData.receiptsRoot,
-      blockData.logsBloom,
-      blockData.difficulty == "0" ? "0x" : web3.utils.toHex(blockData.difficulty),
-      web3.utils.toHex(blockData.number),
-      web3.utils.toHex(blockData.gasLimit),
-      web3.utils.toHex(blockData.gasUsed),
-      web3.utils.toHex(blockData.timestamp),
-      blockData.extraData,
-      blockData.mixHash,
-      blockData.nonce,
-    ])
-
-    let correctHeader = Header.fromBuffer(correctHeaderBuf)
-
-    assert(correctHeaderBuf.equals(correctHeader.serialize()))
-    //assert(correctHeaderBuf.equals(header.serialize()))
-    console.log(web3.utils.sha3(header.serialize()))
-    console.log(web3.utils.sha3(correctHeader.serialize()))
-    console.log(web3.utils.sha3(Header.fromRpc(blockData).serialize()))
-    console.log(web3.utils.sha3(utils.rlp.encode(blockHeaderFromRpc(blockData).raw)))
-    console.log(blockData.hash)
+  it('mainnet header', () => {
+    let blockData = require(path.join(__dirname, 'data', 'mainnet-block.json'))
+    let header = Header.fromWeb3(blockData)
+    assert(web3.utils.sha3(header.serialize()) === blockData.hash)
   })
 })
