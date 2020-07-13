@@ -37,6 +37,11 @@ class Receipt extends EthObject {
   static fromWeb3(web3Result) {
     let rpcResult = Object.assign({}, web3Result)
     rpcResult.cumulativeGasUsed = web3.utils.toHex(rpcResult.cumulativeGasUsed)
+    if (web3Result.status === true) {
+      rpcResult.status = '0x1'
+    } else if (web3Result.status === false) {
+      rpcResult.status = '0x0'
+    }
     return this.fromRpc(rpcResult)
   }
 }
