@@ -13,6 +13,15 @@ class Receipt extends EthObject {
     ]
   }
 
+  get buffer() {
+    let buffer = super.buffer;
+    // https://eips.ethereum.org/EIPS/eip-2930
+    if (this.type === '0x1') {
+      buffer = Buffer.concat([toBuffer(1), buffer]);
+    }
+    return buffer;
+  }
+
   constructor(raw = Receipt.NULL) {
     super(Receipt.fields, raw)
   }
@@ -26,12 +35,15 @@ class Receipt extends EthObject {
     for (var i = 0; i < rpcResult.logs.length; i++) {
       logs.push(Log.fromRpc(rpcResult.logs[i]))
     }
-    return new Receipt([
+
+    let receipt = new Receipt([
       toBuffer(rpcResult.status || rpcResult.root),
       toBuffer(rpcResult.cumulativeGasUsed),
       toBuffer(rpcResult.logsBloom),
       logs
     ])
+    receipt.type = rpcResult.type;
+    return receipt
   }
 
   static fromWeb3(web3Result) {
