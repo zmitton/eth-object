@@ -36,6 +36,8 @@
     "chai": "^4.2.0",
     "ethereumjs-block": "^2.2.2",
     "ethereumjs-vm": "^4.2.0",
-    "mocha": "^6.1.4"
+    "mocha": "^6.1.4",
+    "merkle-patricia-tree": "^2.1.2",
+    "promisfy": "^1.2.0"
   }
 }

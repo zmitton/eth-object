@@ -1,8 +1,10 @@
 const { Account, Header, Log, Proof, Receipt, Transaction } = require('../index')
+const Tree = require('merkle-patricia-tree')
 const path = require('path')
 const web3 = require('web3')
-const utils = require('ethereumjs-util')
+const { encode } = require('eth-util-lite')
 const { assert } = require('chai')
+const { promisfy } = require('promisfy')
 const blockHeaderFromRpc = require('ethereumjs-block/header-from-rpc');
 
 describe('Objects should do some shit', () => {
@@ -61,5 +63,32 @@ describe('Convert Web3 response to buffer correctly', () => {
     let blockData = require(path.join(__dirname, 'data', 'mainnet-block.json'))
     let header = Header.fromWeb3(blockData)
     assert(web3.utils.sha3(header.serialize()) === blockData.hash)
+  })
+})
+
+describe('Berlin Hard fork test', async () => {
+  it('should serialize receipts properly', async () => {
+    let data = require(path.join(__dirname, 'data', 'berlin-mainnet-receipts-test-data.json'));
+    data.receipts.forEach((receipt) => {
+      let rec = Receipt.fromWeb3(receipt);
+      if (rec.type === '0x1') {
+        assert(rec.buffer[0] === 1);
+      } else {
+        assert(rec.buffer[0] !== 1);
+      }
+    });
+  })
+
+  it('should compute the expected receipt root', async () => {
+    let data = require(path.join(__dirname, 'data', 'berlin-mainnet-receipts-test-data.json'));
+    const tree = new Tree()
+    await Promise.all(
+      data.receipts.map((receipt) => {
+        const path = encode(receipt.transactionIndex)
+        const serializedReceipt = Receipt.fromWeb3(receipt).serialize()
+        return promisfy(tree.put, tree)(path, serializedReceipt)
+      })
+    )
+    assert('0x' + tree.root.toString('hex') === data.expected_receipts_root);
   })
 })
