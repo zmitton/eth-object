@@ -15,9 +15,9 @@ class Receipt extends EthObject {
 
   get buffer() {
     let buffer = super.buffer;
-    // https://eips.ethereum.org/EIPS/eip-2930
-    if (this.type === '0x1') {
-      buffer = Buffer.concat([toBuffer(1), buffer]);
+    // https://eips.ethereum.org/EIPS/eip-2718
+    if (this.type !== '0x0' && this.type !== 0) {
+      buffer = Buffer.concat([toBuffer(this.type), buffer]);
     }
     return buffer;
   }
