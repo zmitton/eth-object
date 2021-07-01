@@ -22,6 +22,7 @@ class Header extends EthObject {
       'extraData',
       'mixHash',
       'nonce',
+      'baseFeePerGas'
     ]
   }
 
@@ -35,7 +36,7 @@ class Header extends EthObject {
   static fromObject(rpcResult) { return this.fromRpc(rpcResult) }
   static fromRpc(rpcResult) {
     if (rpcResult) {
-      return new this([
+      let data = [
         toBuffer(rpcResult.parentHash),
         toBuffer(rpcResult.sha3Uncles) || KECCAK256_RLP_ARRAY,
         toBuffer(rpcResult.miner),
@@ -51,7 +52,11 @@ class Header extends EthObject {
         toBuffer(rpcResult.extraData),
         toBuffer(rpcResult.mixHash),
         toBuffer(rpcResult.nonce)
-      ])
+      ]
+      if (rpcResult.baseFeePerGas !== undefined && rpcResult.baseFeePerGas !== null) {
+        data.push(toBuffer(rpcResult.baseFeePerGas));
+      }
+      return new this(data);
     } else {
       return new this()
     }
