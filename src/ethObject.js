@@ -28,7 +28,11 @@ class EthObject extends Array {
     });
     Object.defineProperty(this, 'raw', {
       get: function () {
-        return this.fields.map((field, i) => { return this[i] })
+        return this.fields.filter((field, i) => {
+          return this[i] !== undefined;
+        }).map((field, i) => {
+          return this[i];
+        })
       },
     });
     Object.defineProperty(this, 'object', {
