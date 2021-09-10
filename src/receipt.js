@@ -15,8 +15,23 @@ class Receipt extends EthObject{
     super(Receipt.fields, raw)
   }
 
-  static fromBuffer(buf){ return buf ? new Receipt(decode(buf)) : new Receipt() }
-  static fromHex(hex){ return hex ? new Receipt(decode(hex)) : new Receipt() }
+  static fromBuffer(buf){ 
+    if(buf) {
+      // marker for EIP2718 TX Envelope type - anything under is type followed by RLP, over is standard RLP
+      if(buf[0] > 0x7f) {
+        return new Receipt(decode(buf))
+      } else {
+        let receipt = new Receipt(decode(buf.slice(1)))
+        receipt.objtype = toBuffer(buf[0])
+        return receipt
+      }
+    } else {
+      return new Receipt() 
+    }
+  }
+  static fromHex(hex){ 
+    return this.fromBuffer(toBuffer(hex))
+  }
   static fromRaw(raw){ return new Receipt(raw) }
   static fromObject(rpcResult){ return Receipt.fromRpc(rpcResult) }
   static fromRpc(rpcResult){
@@ -24,12 +39,16 @@ class Receipt extends EthObject{
     for (var i = 0; i < rpcResult.logs.length; i++) {
        logs.push(Log.fromRpc(rpcResult.logs[i]))
     }
-    return new Receipt([
+    let receipt = new Receipt([
       toBuffer(rpcResult.status || rpcResult.root),
       toBuffer(rpcResult.cumulativeGasUsed),
       toBuffer(rpcResult.logsBloom),
       logs
     ])
+    if(rpcResult.type) {
+      receipt.objtype = toBuffer(rpcResult.type)
+    }
+    return receipt
   }
 }
 
