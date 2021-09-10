@@ -1,7 +1,9 @@
 const { encode, toHex } = require('eth-util-lite')
 
 class EthObject extends Array{
-
+  set objtype(typeIn) {
+    this.type = typeIn;
+  }
   constructor(fields, raw){
 //raw array
     super(...raw)
@@ -27,8 +29,14 @@ class EthObject extends Array{
       get: function(){ return toHex(this.buffer) },
     });
     Object.defineProperty(this, 'raw', {
+      // only commit to data from fields that exist, since we have multiple transaction formats now we will be missing data depending on the tx type
+      // so we need to skip so the root's are correctly calculated still
       get: function(){ 
-        return this.fields.map((field, i)=>{ return this[i] })
+        return this.fields.filter((field, i) => {
+          return this[i] !== undefined;
+        }).map((field, i) => {
+          return this[i];
+        })
       },
     });
     Object.defineProperty(this, 'object', {
@@ -50,8 +58,22 @@ class EthObject extends Array{
   }
 
 // aliases
-  serialize(){ return this.buffer }
-  toBuffer() { return this.buffer }
+  serialize(){ 
+    // if type is defined, concat type and RLP buffer seperately (for receipts/transactions following EIP2718)
+    if(this.type) {
+      return Buffer.concat([this.type, this.buffer ])
+    } else {
+      return this.buffer 
+    }
+  }
+  toBuffer(){ 
+    // if type is defined, concat type and RLP buffer seperately (for receipts/transactions following EIP2718)
+    if(this.type) {
+      return Buffer.concat([this.type, this.buffer ])
+    } else {
+      return this.buffer 
+    }
+  }
   toHex(){     return this.hex }
   toObject(){  return this.object }
   toString(){  return this.json }
